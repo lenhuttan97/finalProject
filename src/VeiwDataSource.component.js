@@ -11,7 +11,7 @@ export default ViewDataSource = (props) => (
       renderItem={({ item }) =>
         <View style={{ flex: 1, flexDirection: 'row', margin: 1, borderWidth: 1, borderColor: '#0c754991' }}>
           <Image style={styles.ImageComponentStyleRow} source={{ uri: item.flower_image_url }} />
-          <TouchableOpacity onPress={props.GetGridViewItem.bind(this, item.flower_name)}
+          <TouchableOpacity onPress={() => { props.navigation.navigate('ResultPage', {item: item})}}
             style={{ backgroundColor: '#e8f8ee', flex: 1, justifyContent: 'space-around', }}>
             <Text style={styles.ItemNameTextStyleRow} numberOfLines={2} >{item.flower_name}</Text>
             <Text style={styles.ItemDateTextStyleRow}>18-9-2019 11:15PM</Text>
