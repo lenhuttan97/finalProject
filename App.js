@@ -15,7 +15,6 @@ import { createAppContainer } from 'react-navigation';
 import { createStackNavigator } from 'react-navigation-stack';
 import {View, TouchableOpacity, Alert, ActivityIndicator, Image, TextInput, Animated, Platform} from 'react-native';
 import { Ionicons, Entypo, AntDesign} from '@expo/vector-icons';
-import firebase from 'firebase';
 
 import CameraPage from './src/camera.page';
 import GalleryImportScreen from './src/galleryImport.page';
@@ -105,7 +104,7 @@ firebaseUrl() {
 
   componentDidMount = () => {
     this.getApi();
-    this.firebaseUrl();
+   // this.firebaseUrl();
   }
 
   ChangeGridValueFunction = () => {
@@ -123,6 +122,9 @@ firebaseUrl() {
     }
   }
 
+  GetGridViewItem(item){
+    alert(item);
+  }
 
   render() {
     return (

@@ -14,6 +14,7 @@ export default StyleSheet.create({
         position: 'absolute',
         height: 100,
         bottom: 0,
+        backgroundColor:'#255137'
     },
     captureBtn: {
         width: 60,
@@ -35,7 +36,6 @@ export default StyleSheet.create({
         borderColor: "transparent",
     },
     preview: {
-        marginTop:25,
         height: 550,
         width: winWidth,
         position: 'absolute',
@@ -50,7 +50,7 @@ export default StyleSheet.create({
     },
 
     galleryContainer: { 
-        bottom: 65 
+        bottom: 45 
     },
     galleryImageContainer: { 
         width: 75, 
@@ -61,22 +61,30 @@ export default StyleSheet.create({
         width: 75, 
         height: 75 
     },
-    box: {
-        width: 150,
-        height: 100,
-        borderColor: 'black',
-        borderWidth: 2,
-        zIndex: 1,
-        backgroundColor: '#f0f1f2',
-      },
-      right: {
-        position: 'absolute',
-        justifyContent: 'space-around',
-        top: 40,
-        right: 10
-    
-      },
-      container: {
+    myPopup: {
+        zIndex:3, 
+        position:"absolute", 
+        justifyContent:"center",
+        alignItems:"center",
+        width:140,
+        top: 550/2 - 20, 
+        left:winWidth/2-70,
+        height: 40,
+        backgroundColor:"#255137",
+        borderRadius:50,
+        opacity:0.4
+    },
+    myPopupText: {
+        color:"white",
+        fontSize:20,
+        fontFamily:"sans-serif",
+    },
+    scanPreviewImage:{
+        width:50,
+        height:50,
+        position:"absolute"
+    },
+    container: {
         flex: 1,
         backgroundColor: '#fff',
         borderTopWidth: (Platform.OS) === 'ios' ? 0 : 25,
@@ -98,8 +106,6 @@ export default StyleSheet.create({
       itemBanner: {
         flexDirection: 'row',
       },
-    
-    
       todoInput: {
         width: '85%',
         minHeight: '50%',
@@ -107,7 +113,21 @@ export default StyleSheet.create({
         borderBottomWidth: 0.5,
         borderBottomColor: 'grey'
       },
+      right: {
+        position: 'absolute',
+        justifyContent: 'space-around',
+        top: 40,
+        right: 10
     
+      },
+      box: {
+        width: 150,
+        height: 100,
+        borderColor: 'black',
+        borderWidth: 2,
+        zIndex: 1,
+        backgroundColor: '#f0f1f2',
+      },
     
       MainContainer: {
     
