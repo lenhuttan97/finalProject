@@ -25,6 +25,7 @@ class GalleryImportPage extends React.Component {
             uri: null,
             base64: null,
         },
+        image1Result: '',
         send: false
     };
     componentWillMount = () => {
@@ -185,7 +186,7 @@ class GalleryImportPage extends React.Component {
         dataPost.image2 = this.state.image2.base64;
         dataPost.image3 = this.state.image3.base64;
         dataPost.id = 1;
-        console.log(dataPost);
+      //  console.log(dataPost);
 
         this.setState({ send: true }, this.up(dataPost));
         //   dataPost.image3 = this.state.image3;
@@ -202,11 +203,17 @@ class GalleryImportPage extends React.Component {
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify(dataPost),
-        }).then((res) => { res.json();
-             console.log(res); 
-             this.props.navigation.navigate('ResultPage', { 'item': res._bodyInit }); 
-             this.setState({send: false});
-            })
+        // }).then((res) => { res.json();
+        //      console.log(res); 
+        //      this.props.navigation.navigate('ResultPage', { 'item': res._bodyInit }); 
+        //      this.setState({send: false});
+        //     })
+        }).then((response) => response.json())
+        .then((responseJson) => {
+            console.log(responseJson);
+          //  this.props.navigation.navigate('ResultPage', { 'item': responseJson }); 
+          this.setState({send: false, image1Result: responseJson.image1Result});
+        })
             .catch(error => console.warn(error)
             );
 
