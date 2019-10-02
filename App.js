@@ -1,15 +1,3 @@
-// import React from 'react';
-
-// import CameraPage from './src/camera.page';
-
-// export default class App extends React.Component {
-//     render() {
-//         return (
-//             <CameraPage />
-//         );
-//     };
-// };
-
 import React from 'react';
 import { createAppContainer } from 'react-navigation';
 import { createStackNavigator } from 'react-navigation-stack';
@@ -17,6 +5,7 @@ import { createDrawerNavigator } from 'react-navigation-drawer';
 import { View, TouchableOpacity, Alert, ActivityIndicator, Image, TextInput, Animated } from 'react-native';
 import { Ionicons, Entypo, AntDesign, MaterialIcons } from '@expo/vector-icons';
 import AppIntroSlider from 'react-native-app-intro-slider';
+import * as firebase from 'firebase';
 
 import CameraPage from './src/camera.page';
 import GalleryImportScreen from './src/galleryImport.page';
@@ -27,6 +16,8 @@ import ViewDataSource from './src/VeiwDataSource.component';
 import styles from './src/styles';
 import InforUser from './src/infoUser.page';
 import slides from './slidesIntro';
+import Login from './login';
+import mainScreen1 from './mainScreen1'
 
 class mainScreen extends React.Component {
   constructor(props) {
@@ -36,7 +27,7 @@ class mainScreen extends React.Component {
       switchView: true,
       search: true,
       GridColumnsValue: true,
-      isLoading: true,
+      isLoading: false,
       fadeValue: new Animated.Value(0),
       fadeValue1: new Animated.Value(0),
       fadeValue2: new Animated.Value(0),
@@ -94,23 +85,9 @@ class mainScreen extends React.Component {
       });
   }
 
-  firebaseUrl() {
-    var firebaseConfig = {
-      apiKey: "AIzaSyCjXSBR_XRP_4pmFwikBkhnbBYggdRvBMw",
-      authDomain: "imagecccd.firebaseapp.com",
-      databaseURL: "https://imagecccd.firebaseio.com",
-      projectId: "imagecccd",
-      storageBucket: "imagecccd.appspot.com",
-      messagingSenderId: "218521949816",
-      appId: "1:218521949816:web:505df4bbc22c2b8698bf8d"
-    };
-    // Initialize Firebase
-    firebase.initializeApp(firebaseConfig);
-  }
-
-  componentDidMount = () => {
-    this.getApi();
-    // this.firebaseUrl();
+  componentWillMount = () => {
+   this.checkLogin();
+   this.getApi();
   }
 
   ChangeGridValueFunction = () => {
@@ -128,16 +105,39 @@ class mainScreen extends React.Component {
     }
   }
 
+  checkLogin= async () =>{
+    var database = firebase.database();
+    const snapshot = await database.ref('/isLogin').once('value');
+    const messages = this.readMessages(snapshot.val());
+    firebase.database().ref('isLogin/' ).set({
+      "fisttime": false,
+    });
+   // console.log(messages);
+    this.setState({theFistInstall: messages[0]});
+  }
+  readMessages = snapshotData => ( typeof snapshotData === 'object' && Object.values(snapshotData) ) || snapshotData;
+
+
   on_Done_all_slides = () => {
-    this.setState({ theFistInstall: true });
+    this.setState({ theFistInstall: false });
   };
 
   on_Skip_slides = () => {
-    this.setState({ theFistInstall: true });
+    this.setState({ theFistInstall: false });
   };
 
   render() {
+    
     if (this.state.theFistInstall) {
+      return (
+        <AppIntroSlider
+          slides={slides}
+          onDone={this.on_Done_all_slides}
+          showSkipButton={true}
+          onSkip={this.on_Skip_slides}
+        />
+      );
+    } else {
       return (
         <View style={styles.container}>
           <View style={styles.banner}>
@@ -206,17 +206,7 @@ class mainScreen extends React.Component {
           </View>
         </View>
       );
-    } else {
-      return (
-        <AppIntroSlider
-          slides={slides}
-          onDone={this.on_Done_all_slides}
-          showSkipButton={true}
-          onSkip={this.on_Skip_slides}
-        />
-      );
     }
-
   }
 }
 
@@ -236,6 +226,8 @@ const AppNavigator = createStackNavigator(
     main: mainScreen,
     GalleryImportPage: GalleryImportScreen,
     ResultPage: ResultPage,
+    login:Login,
+    main1:mainScreen1,
   },
   {
     headerMode: 'none',
@@ -246,14 +238,13 @@ const AppNavigator = createStackNavigator(
   },
 
 );
-const mainScreenDraweres = createDrawerNavigator(
-  {
-    Initial: AppNavigator,
-  },
-  {
-    contentComponent: (props) => <InforUser />,
-
-  }
-);
+// const mainScreenDraweres = createDrawerNavigator(
+//   {
+//     Initial: AppNavigator,
+//   },
+//   {
+//     contentComponent: InforUser 
+//   }
+// );
 //export default draweres;
-export default createAppContainer(mainScreenDraweres);
+export default createAppContainer(AppNavigator);

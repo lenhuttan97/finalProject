@@ -4,7 +4,7 @@ import { ActivityIndicator, Image, View, StyleSheet, Text, ScrollView, Touchable
 import { createAppContainer } from 'react-navigation';
 import { createStackNavigator } from 'react-navigation-stack';
 import {
-    MaterialCommunityIcons, FontAwesome, MaterialIcons
+    MaterialCommunityIcons, Feather, MaterialIcons, FontAwesome
 } from '@expo/vector-icons';
 import ResultPage from './result.page';
 import * as ImagePicker from 'expo-image-picker';
@@ -37,6 +37,47 @@ class GalleryImportPage extends React.Component {
         })
 
     }
+
+    _reSetImage(number) {
+        //   console.warn(number);
+        //  console.log('_reSetImage');
+        switch (number) {
+            case 1:
+                {
+                    this.setState({
+                        image1: {
+                            uri: null,
+                            base64: null,
+                        }
+                    });
+                    break;
+                };
+            case 2:
+                {
+                    this.setState({
+                        image2: {
+                            uri: null,
+                            base64: null,
+                        }
+                    });
+                    break;
+                };
+            case 3:
+                {
+                    this.setState({
+                        image3: {
+                            uri: null,
+                            base64: null,
+                        }
+                    });
+                    break;
+                };
+
+
+        }
+    }
+
+
     render() {
 
 
@@ -45,115 +86,146 @@ class GalleryImportPage extends React.Component {
         return (
             <View style={{ flex: 1, backgroundColor: '#e3e3e8' }}>
                 {send && <View style={{
-                        flex: 1,
-                        zIndex: 1,
-                        position: "absolute",
-                        justifyContent: "center",
-                        alignItems: "center",
-                        backgroundColor: "#89f5c39c",
-                        left: 0,right: 0,bottom: 0,top:0
-                        
-                    }}>
-                        <ActivityIndicator size="large" color="green" />
-                    </View>
-                 }
-                        <View style={{ flex: 1, backgroundColor: '#e3e3e8' }}>
-                            <ScrollView style={{ flex: 0.85 }}>
-                                <View>
-                                    <View style={{ flexDirection: 'row', alignItems: 'center', marginLeft: 30 }}>
-                                        <FontAwesome name="id-card-o" size={30} color='#043508' />
-                                        <Text style={styles1.ItemNameTextStyleRow}>Mặt trước:</Text>
-                                    </View>
+                    flex: 1,
+                    zIndex: 1,
+                    position: "absolute",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    backgroundColor: "#89f5c39c",
+                    left: 0, right: 0, bottom: 0, top: 0
 
-                                    <View style={styles.container}>
-                                        {!image1.uri ? (<TouchableOpacity style={styles.importImage} onPress={this._pickImage1}>
-                                            <MaterialCommunityIcons name="image-plus" size={45} color='#ccc' />
-                                        </TouchableOpacity>) : (
-                                                <Image source={{ uri: image1.uri }}
-                                                    style={{
-                                                        height: 300,
-                                                        width: 350,
-                                                        resizeMode: 'contain',
-                                                    }} />
-                                            )
-                                        }
-                                    </View>
-                                </View>
-                                <View>
-                                    <View style={{ flexDirection: 'row', alignItems: 'center', marginLeft: 30 }}>
-                                        <FontAwesome name="id-card-o" size={30} color='#043508' />
-                                        <Text style={styles1.ItemNameTextStyleRow}>Mặt sau:</Text>
-                                    </View>
-                                    <View style={styles.container}>
-                                        {!image2.uri ? (
-                                            <TouchableOpacity style={styles.importImage} onPress={this._pickImage2}>
-                                                <MaterialCommunityIcons name="image-plus" size={45} color='#ccc' />
-                                            </TouchableOpacity>
-                                        ) : (
-                                                <Image source={{ uri: image2.uri }}
-                                                    style={{
-                                                        height: 300,
-                                                        width: 350,
-                                                        resizeMode: 'contain',
-                                                    }} />
-                                            )
-                                        }
-                                    </View>
-                                </View>
-                                <View>
-                                    <View style={{ flexDirection: 'row', alignItems: 'center', marginLeft: 30 }}>
-                                        <MaterialIcons name="person" size={30} color='#043508' />
-                                        <Text style={styles1.ItemNameTextStyleRow}>Ảnh chân dung:</Text>
-                                    </View>
-                                    <View style={styles.container}>
-                                        {!image3.uri ? (
-                                            <View style={{ flex: 1, heigh: "150", flexDirection: "row", justifyContent: "center", alignItems: "center", }}>
-                                                <View style={{ width: 150, height: 150, justifyContent: "flex-start", alignItems: "flex-end" }}>
-                                                    <TouchableOpacity style={[styles.importImage, { width: 150, height: 150, borderColor: '#444', borderWidth: 3 }]} onPress={this._pickImage3}>
-                                                        <MaterialIcons name="person-outline" size={80} color='#444' />
-                                                    </TouchableOpacity>
-                                                </View>
-                                                {/* <View style={{ width: 150, height: 150, justifyContent: "flex-end" }}>
-                                                    <TouchableOpacity style={[styles.importImage1, { width: 50, height: 50, borderColor: '#444', borderWidth: 3 }]} onPress={this._pickImage2}>
-                                                        <Image source={require("../image/camera.png")} style={{ width: 30, height: 30 }}></Image>
-                                                    </TouchableOpacity>
-                                                </View> */}
+                }}>
+                    <ActivityIndicator size="large" color="green" />
+                </View>
+                }
+                <View style={{ flex: 1, backgroundColor: '#e3e3e8' }}>
+                    <ScrollView style={{ flex: 0.85 }}>
+                        <View>
+                            <View style={{ flexDirection: 'row', alignItems: 'center', marginLeft: 30 }}>
+                                <FontAwesome name="id-card-o" size={30} color='#043508' />
+                                <Text style={styles1.ItemNameTextStyleRow}>Mặt trước:</Text>
+                            </View>
+                            <View style={styles.container}>
+                                {!image1.uri ? (<TouchableOpacity style={styles.importImage} onPress={this._pickImage1}>
+                                    <MaterialCommunityIcons name="image-plus" size={45} color='#ccc' />
+                                </TouchableOpacity>) : (
+
+                                        <View style={styles.importImageDone}>
+
+                                            <View style={{ flexDirection: 'row', justifyContent: 'flex-end', backgroundColor: '#ddd', marginBottom: 1 }}>
+                                                <TouchableOpacity onPress={() => this._pickImage1()} style={{ backgroundColor: '#ccc', width: 40, alignItems: 'center' }}>
+                                                    <MaterialIcons name="edit" size={20} color="black" />
+                                                </TouchableOpacity>
+
+                                                <TouchableOpacity onPress={() => this._reSetImage(1)} style={{ backgroundColor: '#ccc', width: 40, alignItems: 'center' }}>
+                                                    <Feather name='x' size={20} coloer="balck" />
+                                                </TouchableOpacity>
                                             </View>
-                                        ) : (
-                                                <Image source={{ uri: image3.uri }}
-                                                    style={{
-                                                        height: 300,
-                                                        width: 350,
-                                                        resizeMode: 'contain',
-                                                    }} />
-                                            )
-                                        }
-                                    </View>
-                                </View>
-                                {/* <TouchableOpacity onPress={this._submitImage} style={{ width: 300, height: 100 }} > */}
+                                            <Image source={{ uri: image1.uri }}
+                                                style={{
+                                                    height: 300,
+                                                    width: 350,
+                                                    resizeMode: 'contain',
+                                                }} />
+                                        </View>
 
-                            </ScrollView>
-                            <View style={[styles.container, { flex: 0.15, borderTopWidth: 1, borderTopColor: '#e8eaed' }]}>
 
-                                <TouchableOpacity onPress={this._submitImage} style={{
-                                    width: 200, height: 50, borderRadius: 10, backgroundColor: '#71bf83', justifyContent: 'center',
-                                    alignItems: 'center', flexDirection: 'row',
-                                }} >
-                                    <MaterialCommunityIcons name="upload-multiple" size={35} color="white" />
-                                    <Text style={[styles1.ItemNameTextStyleRow, { color: 'white' }]} >submit</Text>
-                                </TouchableOpacity>
-
+                                    )
+                                }
                             </View>
                         </View>
-                 
+                        <View>
+                            <View style={{ flexDirection: 'row', alignItems: 'center', marginLeft: 30 }}>
+                                <FontAwesome name="id-card-o" size={30} color='#043508' />
+                                <Text style={styles1.ItemNameTextStyleRow}>Mặt sau:</Text>
+                            </View>
+                            <View style={styles.container}>
+                                {!image2.uri ? (<TouchableOpacity style={styles.importImage} onPress={this._pickImage2}>
+                                    <MaterialCommunityIcons name="image-plus" size={45} color='#ccc' />
+                                </TouchableOpacity>) : (
+
+                                        <View style={styles.importImageDone}>
+
+                                            <View style={{ flexDirection: 'row', justifyContent: 'flex-end', backgroundColor: '#ddd', marginBottom: 1 }}>
+                                                <TouchableOpacity onPress={() => this._pickImage2()} style={{ backgroundColor: '#ccc', width: 40, alignItems: 'center' }}>
+                                                    <MaterialIcons name="edit" size={20} color="black" />
+                                                </TouchableOpacity>
+
+                                                <TouchableOpacity onPress={() => this._reSetImage(2)} style={{ backgroundColor: '#ccc', width: 40, alignItems: 'center' }}>
+                                                    <Feather name='x' size={20} coloer="balck" />
+                                                </TouchableOpacity>
+                                            </View>
+                                            <Image source={{ uri: image2.uri }}
+                                                style={{
+                                                    height: 300,
+                                                    width: 350,
+                                                    resizeMode: 'contain',
+                                                }} />
+                                        </View>
+
+
+                                    )
+                                }
+                            </View>
+                        </View>
+                        <View>
+                            <View style={{ flexDirection: 'row', alignItems: 'center', marginLeft: 30 }}>
+                                <MaterialIcons name="person" size={30} color='#043508' />
+                                <Text style={styles1.ItemNameTextStyleRow}>Ảnh chân dung:</Text>
+                            </View>
+                            <View style={styles.container}>
+                                {!image3.uri ? (<TouchableOpacity style={styles.importImage} onPress={this._pickImage3}>
+                                    <MaterialCommunityIcons name="image-plus" size={45} color='#ccc' />
+                                </TouchableOpacity>) : (
+
+                                        <View style={styles.importImageDone}>
+
+                                            <View style={{ flexDirection: 'row', justifyContent: 'flex-end', backgroundColor: '#ddd', marginBottom: 1 }}>
+                                                <TouchableOpacity onPress={() => this._pickImage3()} style={{ backgroundColor: '#ccc', width: 40, alignItems: 'center' }}>
+                                                    <MaterialIcons name="edit" size={20} color="black" />
+                                                </TouchableOpacity>
+
+                                                <TouchableOpacity onPress={() => this._reSetImage(3)} style={{ backgroundColor: '#ccc', width: 40, alignItems: 'center' }}>
+                                                    <Feather name='x' size={20} coloer="balck" />
+                                                </TouchableOpacity>
+                                            </View>
+                                            <Image source={{ uri: image3.uri }}
+                                                style={{
+                                                    height: 300,
+                                                    width: 350,
+                                                    resizeMode: 'contain',
+                                                }} />
+                                        </View>
+
+
+                                    )
+                                }
+                            </View>
+                        </View>
+                        {/* <TouchableOpacity onPress={this._submitImage} style={{ width: 300, height: 100 }} > */}
+
+                    </ScrollView>
+                    <View style={[styles.container, { flex: 0.15, borderTopWidth: 1, borderTopColor: '#e8eaed' }]}>
+
+                        <TouchableOpacity onPress={this._submitImage} style={{
+                            width: 200, height: 50, borderRadius: 10, backgroundColor: '#71bf83', justifyContent: 'center',
+                            alignItems: 'center', flexDirection: 'row',
+                        }} >
+                            <MaterialCommunityIcons name="upload-multiple" size={35} color="white" />
+                            <Text style={[styles1.ItemNameTextStyleRow, { color: 'white' }]} >submit</Text>
+                        </TouchableOpacity>
+
+                    </View>
+                </View>
+
             </View>
         );
     }
     _pickImage1 = async () => {
         let image1Data = await ImagePicker.launchImageLibraryAsync({
-            mediaTypes: ImagePicker.MediaTypeOptions.All,
+            mediaTypes: ImagePicker.MediaTypeOptions.Image,
             base64: true,
-            allowsEditing: true,
+           // allowsEditing: true,
         });
         if (!image1Data.cancelled) {
             this.setState({ image1: { uri: image1Data.uri, base64: image1Data.base64 } });
@@ -163,7 +235,7 @@ class GalleryImportPage extends React.Component {
         let image2Data = await ImagePicker.launchImageLibraryAsync({
             mediaTypes: ImagePicker.MediaTypeOptions.Image,
             base64: true,
-            allowsEditing: true,
+            //allowsEditing: true,
         });
         if (!image2Data.cancelled) {
             this.setState({ image2: { uri: image2Data.uri, base64: image2Data.base64 } });
@@ -173,7 +245,7 @@ class GalleryImportPage extends React.Component {
         let image2Data = await ImagePicker.launchImageLibraryAsync({
             mediaTypes: ImagePicker.MediaTypeOptions.Image,
             base64: true,
-            allowsEditing: true,
+            //allowsEditing: true,
         });
         if (!image2Data.cancelled) {
             this.setState({ image3: { uri: image2Data.uri, base64: image2Data.base64 } });
@@ -201,27 +273,28 @@ class GalleryImportPage extends React.Component {
                 'Content-Type': 'application/json',
             }
             ,
-             body: JSON.stringify(dataPost),
-         }).then((res) =>  res.json())
-        .then((res) => {
-            console.log(res)
-             //this.props.navigation.navigate('ResultPage', { 'item': res._bodyInit }); 
-             if(res.message=="Successful"){
-             this.setState({send: false},() =>{ 
-                 alert("OCR :"+ res.message_OCR + "\n"+"Facial :"+res.message_facial + "\n"+"template_checking :"+res.message_template_checking)
-             })}
-             else {
-                this.setState({send: false},() =>{ 
-                    alert("Xin hãy chọn ảnh khác!!!") 
-             })
-            }
+            body: JSON.stringify(dataPost),
+        }).then((res) => res.json())
+            .then((res) => {
+                console.log(res)
+                //this.props.navigation.navigate('ResultPage', { 'item': res._bodyInit }); 
+                if (res.message == "Successful") {
+                    this.setState({ send: false }, () => {
+                        alert("OCR :" + res.message_OCR + "\n" + "Facial :" + res.message_facial + "\n" + "template_checking :" + res.message_template_checking)
+                    })
+                }
+                else {
+                    this.setState({ send: false }, () => {
+                        alert("Xin hãy chọn ảnh khác!!!")
+                    })
+                }
             })
             .catch(error => {
-                this.setState({send: false},() =>{ 
-                    alert("Server đang bảo trì. Xin vui lòng thử lại sau !!!") 
-             })
+                this.setState({ send: false }, () => {
+                    alert("Server đang bảo trì. Xin vui lòng thử lại sau !!!")
+                })
             }
-                
+
             );
 
     }
@@ -306,7 +379,6 @@ const AppNavigator = createStackNavigator(
 
 export default createAppContainer(AppNavigator);
 
-const { width: winWidth, height: winHeight } = Dimensions.get('window');
 const styles = StyleSheet.create({
     container: {
         alignItems: 'center',
@@ -342,5 +414,20 @@ const styles = StyleSheet.create({
         alignItems: "center",
         justifyContent: 'center',
         marginLeft: 10
+    },
+    sending: {
+        flex: 1,
+        zIndex: 1,
+        position: "absolute",
+        justifyContent: "center",
+        alignItems: "center",
+        backgroundColor: "#89f5c39c",
+        left: 0, right: 0, bottom: 0, top: 0
+    },
+    importImageDone: {
+        borderWidth: 1, height: 325,
+        width: 350,
+        borderColor: '#ccc',
+        backgroundColor: '#eaebed',
     }
 });

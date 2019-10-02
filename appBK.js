@@ -22,8 +22,6 @@ import ResultPage from './src/result.page';
 import TodoItem from './src/todoItem.component';
 import FloatingActionView from './src/floatingAction.component';
 import ViewDataSource from './src/VeiwDataSource.component';
-import Login from './login';
-import mainScreen1 from './mainScreen1'
 import styles from './src/styles';
 
 
@@ -36,7 +34,7 @@ class mainScreen extends React.Component {
       switchView: true,
       search: true,
       GridColumnsValue: true,
-      isLoading: false,
+      isLoading: true,
       fadeValue: new Animated.Value(0),
       fadeValue1: new Animated.Value(0),
       fadeValue2: new Animated.Value(0),
@@ -107,6 +105,10 @@ firebaseUrl() {
   firebase.initializeApp(firebaseConfig);
 }
 
+  componentDidMount = () => {
+    this.getApi();
+   // this.firebaseUrl();
+  }
 
   ChangeGridValueFunction = () => {
     if (this.state.GridColumnsValue === true) {
@@ -166,7 +168,7 @@ firebaseUrl() {
               </View>)}
 
         </View>
-        {/* {this.state.loading && <TodoItem switchView={this.state.GridColumnsValue} switchViewFunction={this.ChangeGridValueFunction} />} */}
+        {this.state.loading && <TodoItem switchView={this.state.GridColumnsValue} switchViewFunction={this.ChangeGridValueFunction} />}
         <View style={styles.MainContainer}>
           {this.state.isLoading ? (
             <View style={{ flex: 1, justifyContent: 'center' }}>
@@ -207,8 +209,6 @@ const AppNavigator = createStackNavigator(
   {
     CameraS: cameraScreen,
     main: mainScreen,
-    login:Login,
-    main1:mainScreen1,
     GalleryImportPage: GalleryImportScreen,
     ResultPage: ResultPage,
   },
@@ -217,7 +217,7 @@ const AppNavigator = createStackNavigator(
     navigationOptions: {
       headerVisible: false,
     },
-    initialRouteName: 'login',
+    initialRouteName: 'main',
   },
 
 );
