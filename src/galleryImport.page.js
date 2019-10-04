@@ -8,8 +8,10 @@ import {
 } from '@expo/vector-icons';
 import ResultPage from './result.page';
 import * as ImagePicker from 'expo-image-picker';
-
 import styles1 from './styles';
+
+const { width: winWidth, height: winHeight } = Dimensions.get('window');
+
 class GalleryImportPage extends React.Component {
     //   const { id, status, body } = props.navigation.state.params.updatedTodo;
     state = {
@@ -113,6 +115,10 @@ class GalleryImportPage extends React.Component {
                                         <View style={styles.importImageDone}>
 
                                             <View style={{ flexDirection: 'row', justifyContent: 'flex-end', backgroundColor: '#ddd', marginBottom: 1 }}>
+                                                <TouchableOpacity onPress={() => this._cameraPic1()} style={{ backgroundColor: '#ccc', width: 40, alignItems: 'center' }}>
+                                                    <Feather name='camera' size={20} coloer="balck" />
+                                                </TouchableOpacity>
+                                                
                                                 <TouchableOpacity onPress={() => this._pickImage1()} style={{ backgroundColor: '#ccc', width: 40, alignItems: 'center' }}>
                                                     <MaterialIcons name="edit" size={20} color="black" />
                                                 </TouchableOpacity>
@@ -147,6 +153,10 @@ class GalleryImportPage extends React.Component {
                                         <View style={styles.importImageDone}>
 
                                             <View style={{ flexDirection: 'row', justifyContent: 'flex-end', backgroundColor: '#ddd', marginBottom: 1 }}>
+                                                <TouchableOpacity onPress={() => this._cameraPic2()} style={{ backgroundColor: '#ccc', width: 40, alignItems: 'center' }}>
+                                                    <Feather name='camera' size={20} coloer="balck" />
+                                                </TouchableOpacity>
+                                                
                                                 <TouchableOpacity onPress={() => this._pickImage2()} style={{ backgroundColor: '#ccc', width: 40, alignItems: 'center' }}>
                                                     <MaterialIcons name="edit" size={20} color="black" />
                                                 </TouchableOpacity>
@@ -172,6 +182,9 @@ class GalleryImportPage extends React.Component {
                             <View style={{ flexDirection: 'row', alignItems: 'center', marginLeft: 30 }}>
                                 <MaterialIcons name="person" size={30} color='#043508' />
                                 <Text style={styles1.ItemNameTextStyleRow}>Ảnh chân dung:</Text>
+                                <TouchableOpacity onPress={() => this._cameraPic3()} style={{  width: 40, alignItems: 'center',position:"absolute", left:winWidth-90 }}>
+                                                    <Feather name='camera' size={30} coloer="balck" />
+                                </TouchableOpacity>
                             </View>
                             <View style={styles.container}>
                                 {!image3.uri ? (<TouchableOpacity style={styles.importImage} onPress={this._pickImage3}>
@@ -181,6 +194,9 @@ class GalleryImportPage extends React.Component {
                                         <View style={styles.importImageDone}>
 
                                             <View style={{ flexDirection: 'row', justifyContent: 'flex-end', backgroundColor: '#ddd', marginBottom: 1 }}>
+                                                <TouchableOpacity onPress={() => this._cameraPic3()} style={{ backgroundColor: '#ccc', width: 40, alignItems: 'center' }}>
+                                                    <Feather name='camera' size={20} coloer="balck" />
+                                                </TouchableOpacity>
                                                 <TouchableOpacity onPress={() => this._pickImage3()} style={{ backgroundColor: '#ccc', width: 40, alignItems: 'center' }}>
                                                     <MaterialIcons name="edit" size={20} color="black" />
                                                 </TouchableOpacity>
@@ -221,6 +237,36 @@ class GalleryImportPage extends React.Component {
             </View>
         );
     }
+    _cameraPic1 = async () => {
+        let image1Data = await ImagePicker.launchCameraAsync({
+            mediaTypes: ImagePicker.MediaTypeOptions.Image,
+            base64: true,
+           // allowsEditing: true,
+        });
+        if (!image1Data.cancelled) {
+            this.setState({ image1: { uri: image1Data.uri, base64: image1Data.base64 } });
+        }
+    };
+    _cameraPic2 = async () => {
+        let image2Data = await ImagePicker.launchCameraAsync({
+            mediaTypes: ImagePicker.MediaTypeOptions.Image,
+            base64: true,
+            //allowsEditing: true,
+        });
+        if (!image2Data.cancelled) {
+            this.setState({ image2: { uri: image2Data.uri, base64: image2Data.base64 } });
+        }
+    };
+    _cameraPic3 = async () => {
+        let image2Data = await ImagePicker.launchCameraAsync({
+            mediaTypes: ImagePicker.MediaTypeOptions.Image,
+            base64: true,
+            //allowsEditing: true,
+        });
+        if (!image2Data.cancelled) {
+            this.setState({ image3: { uri: image2Data.uri, base64: image2Data.base64 } });
+        }
+    };
     _pickImage1 = async () => {
         let image1Data = await ImagePicker.launchImageLibraryAsync({
             mediaTypes: ImagePicker.MediaTypeOptions.Image,
@@ -276,16 +322,26 @@ class GalleryImportPage extends React.Component {
             body: JSON.stringify(dataPost),
         }).then((res) => res.json())
             .then((res) => {
-                console.log(res)
+               // console.log(res)
                 //this.props.navigation.navigate('ResultPage', { 'item': res._bodyInit }); 
+                checkString = "Some thing is wrong"
                 if (res.message == "Successful") {
                     this.setState({ send: false }, () => {
-                        alert("OCR :" + res.message_OCR + "\n" + "Facial :" + res.message_facial + "\n" + "template_checking :" + res.message_template_checking)
+                      //  alert("OCR :" + res.message_OCR + "\n" + "Facial :" + res.message_facial + "\n" + "template_checking :" + res.message_template_checking)
+                        this.props.navigation.navigate("ResultPage",{"data":res});
+                    })
+                }
+                else if(res.message.indexOf(checkString)>-1) {
+                    console.log(res)
+                    this.setState({ send: false }, () => {
+                        alert("Xin vui lòng chọn ảnh hợp lệ")
+                    //   this.props.navigation.navigate("ResultPage",{"data":res});
                     })
                 }
                 else {
                     this.setState({ send: false }, () => {
-                        alert("Xin hãy chọn ảnh khác!!!")
+                        //  alert("Xin hãy chọn ảnh khác!!!")
+                        this.props.navigation.navigate("ResultPage",{"data":res});
                     })
                 }
             })
@@ -363,7 +419,7 @@ const AppNavigator = createStackNavigator(
                 headerTitleStyle: {
                     fontWeight: 'bold',
                 },
-                title: 'GalleryImportPage',
+                title: 'Xác thực CCCD',
             }
         },
         ResultPage: {

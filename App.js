@@ -7,7 +7,7 @@ import { Ionicons, Entypo, AntDesign, MaterialIcons } from '@expo/vector-icons';
 import AppIntroSlider from 'react-native-app-intro-slider';
 import * as firebase from 'firebase';
 
-import CameraPage from './src/camera.page';
+import Camera from './src/camera.page';
 import GalleryImportScreen from './src/galleryImport.page';
 import ResultPage from './src/result.page';
 
@@ -87,7 +87,7 @@ class mainScreen extends React.Component {
 
   componentWillMount = () => {
    this.checkLogin();
-   this.getApi();
+   //this.getApi();
   }
 
   ChangeGridValueFunction = () => {
@@ -144,7 +144,8 @@ class mainScreen extends React.Component {
             {this.state.search ? (
               <View style={styles.itemBanner}>
                 <View style={{ flex: 0.15, alignItems: 'center' }}>
-                  <TouchableOpacity onPress={() => this.props.navigation.openDrawer()}>
+                  {/* <TouchableOpacity onPress={() => this.props.navigation.openDrawer()}> */}
+                  <TouchableOpacity >
                     <MaterialIcons name="menu" size={27} color="green" />
                   </TouchableOpacity>
                 </View>
@@ -210,19 +211,19 @@ class mainScreen extends React.Component {
   }
 }
 
-class cameraScreen extends React.Component {
-  render() {
-    return (
-      <CameraPage />
-    )
-  }
-}
+// class cameraScreen extends React.Component {
+//   render() {
+//     return (
+//       <CameraPage />
+//     )
+//   }
+// }
 
 
 
 const AppNavigator = createStackNavigator(
   {
-    CameraS: cameraScreen,
+    CameraS: Camera,
     main: mainScreen,
     GalleryImportPage: GalleryImportScreen,
     ResultPage: ResultPage,
@@ -234,7 +235,7 @@ const AppNavigator = createStackNavigator(
     navigationOptions: {
       headerVisible: false,
     },
-    initialRouteName: 'main',
+    initialRouteName: 'login',
   },
 
 );

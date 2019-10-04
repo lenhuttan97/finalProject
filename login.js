@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {ActivityIndicator, Alert, Button, Text, TouchableOpacity, TextInput, View, StyleSheet, Image, Dimensions } from 'react-native';
+import {ActivityIndicator, Alert, Button, Text, TouchableOpacity, TextInput, View, StyleSheet, Image, Dimensions, KeyboardAvoidingView } from 'react-native';
 import * as firebase from 'firebase';
 
 const { width: winWidth, height: winHeight } = Dimensions.get('window');
@@ -45,6 +45,10 @@ export default class Login extends Component {
     const value = messages.filter(data => data.username==this.state.username && data.password == this.state.password )
     if (value.length) {
       this.setState ({logged:true,user:value.username,isLoading:false})
+      firebase.database().ref('isLogin/' ).set({
+      "name": this.state.username,
+      "firsttime": value[0].firsttime,
+    });
       data = {"user":this.state.username,"firstTime":value[0].firsttime}
       this.props.navigation.navigate( 'main1',{"data":data});
     }
@@ -57,8 +61,12 @@ export default class Login extends Component {
   
   render() {
     return (
-
-      <View style={styles.container}>
+      <KeyboardAvoidingView
+    enabled
+    behavior="padding"
+    style={styles.container}
+  > 
+    
         
         <View style={{height:24,width:"100%", backgroundColor:"#3fa65b",position:"absolute",top:0}}/>
         <Image source = {require('./image/logo-fe-credit.png')} style={styles.logo}></Image>
@@ -105,7 +113,9 @@ export default class Login extends Component {
                         <ActivityIndicator size="large" color="green" />
                     </View>
                  }
-      </View>
+ 
+  </KeyboardAvoidingView>
+     
     );
   }
 }

@@ -206,12 +206,13 @@ export default styles = StyleSheet.create({
     marginTop: 20,
   },
   text: {
-    color: '#fff',
+    color: 'red',
     fontSize: 20,
   },
   image: {
-    width: 200,
-    height: 200,
-    resizeMode: 'contain'
+    top:28,
+    width: winWidth,
+    height: winHeight-24,
+    resizeMode:"stretch"
   }
 });
